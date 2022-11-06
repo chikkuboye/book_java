@@ -73,12 +73,72 @@ public class Books {
                     break;
                 case 3:
                     System.out.println("Search");
+                    System.out.println("Enter the book id");
+                    int id = sc.nextInt();
+                    try
+                    {
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library_db", "root", "");
+                        String sql = "SELECT `book_name`, `book_categ`, `charge_p_day`, `Author_name`, `Established_date` FROM `books_detail` WHERE `id`="+id;
+                        Statement stmt = con.createStatement();
+                        ResultSet rs = stmt.executeQuery(sql);
+                        while (rs.next()){
+                            name = rs.getString("book_name");
+                            categ = rs.getString("book_categ");
+                            charge = rs.getInt("charge_p_day");
+                            Author = rs.getString("Author_name");
+                            date = rs.getString("Established_date");
+                            System.out.println("name="+name);
+                            System.out.println("category="+categ);
+                            System.out.println("Author name ="+Author);
+                            System.out.println("Established date ="+date+'\n');
+                        }
+                    }
+                    catch (Exception e){
+                        System.out.println(e);
+                    }
                     break;
                 case 4:
                     System.out.println("Update");
+                    System.out.println("Enter the id of book ");
+                    id = sc.nextInt();
+                    System.out.println("Book name");
+                    name = sc.next();
+                    System.out.println("Book category");
+                    categ = sc.next();
+                    System.out.println("Charge per day");
+                    charge = sc.nextInt();
+                    System.out.println("Author name");
+                    Author = sc.next();
+                    System.out.println("Established date");
+                    date = sc.next();
+                    try{
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library_db", "root", "");
+                        String sql = "UPDATE `books_detail` SET `book_name`='"+name+"',`book_categ`='"+categ+"',`charge_p_day`='"+charge+"',`Author_name`='"+Author+"',`Established_date`='"+date+"' WHERE `id`="+id;
+                        Statement stmt = con.createStatement();
+                        stmt.executeUpdate(sql);
+                        System.out.println("Updated the details of the book successfully");
+                    }
+                    catch (Exception e){
+                        System.out.println(e);
+                    }
                     break;
                 case 5:
                     System.out.println("Delete");
+                    System.out.println("Enter the id of book ");
+                    id = sc.nextInt();
+                    try{
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library_db", "root", "");
+                        String sql = "DELETE FROM `books_detail` WHERE `id`="+id;
+                        Statement stmt = con.createStatement();
+                        stmt.executeUpdate(sql);
+                        System.out.println("Deleted the details of the book successfully");
+                    }
+                    catch (Exception e){
+                        System.out.println(e);
+                    }
                     break;
                 case 6:
                     System.exit(0);

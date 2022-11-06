@@ -1,6 +1,4 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
+import java.sql.*;
 import java.util.Scanner;
 
 public class Books {
@@ -50,6 +48,28 @@ public class Books {
                     break;
                 case 2:
                     System.out.println("View");
+                    try{
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library_db", "root", "");
+                        String sql = "SELECT `book_name`, `book_categ`, `charge_p_day`, `Author_name`, `Established_date` FROM `books_detail`";
+                        Statement stmt = con.createStatement();
+                        ResultSet rs = stmt.executeQuery(sql);
+                        while(rs.next()){
+                            name = rs.getString("book_name");
+                            categ = rs.getString("book_categ");
+                            charge = rs.getInt("charge_p_day");
+                            Author = rs.getString("Author_name");
+                            date = rs.getString("Established_date");
+                            System.out.println("name="+name);
+                            System.out.println("category="+categ);
+                            System.out.println("Author name ="+Author);
+                            System.out.println("Established date ="+date+'\n');
+
+                        }
+                    }
+                    catch (Exception e){
+                        System.out.println(e);
+                    }
                     break;
                 case 3:
                     System.out.println("Search");

@@ -100,6 +100,29 @@ public class Books {
                     break;
                 case 4:
                     System.out.println("Update");
+                    System.out.println("Enter the id of book ");
+                    id = sc.nextInt();
+                    System.out.println("Book name");
+                    name = sc.next();
+                    System.out.println("Book category");
+                    categ = sc.next();
+                    System.out.println("Charge per day");
+                    charge = sc.nextInt();
+                    System.out.println("Author name");
+                    Author = sc.next();
+                    System.out.println("Established date");
+                    date = sc.next();
+                    try{
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library_db", "root", "");
+                        String sql = "UPDATE `books_detail` SET `book_name`='"+name+"',`book_categ`='"+categ+"',`charge_p_day`='"+charge+"',`Author_name`='"+Author+"',`Established_date`='"+date+"' WHERE `id`="+id;
+                        Statement stmt = con.createStatement();
+                        stmt.executeUpdate(sql);
+                        System.out.println("Updated the details of the book successfully");
+                    }
+                    catch (Exception e){
+                        System.out.println(e);
+                    }
                     break;
                 case 5:
                     System.out.println("Delete");
